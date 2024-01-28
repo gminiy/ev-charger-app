@@ -6,6 +6,7 @@ import 'package:ev_charger_app/data/repository/kakao_auth_repository_impl.dart';
 import 'package:ev_charger_app/domain/repository/auth_repository.dart';
 import 'package:ev_charger_app/domain/repository/kakao_auth_repository.dart';
 import 'package:ev_charger_app/domain/use_case/get_user_model_use_case.dart';
+import 'package:ev_charger_app/domain/use_case/kakao_is_login_use_case.dart';
 import 'package:ev_charger_app/domain/use_case/kakao_login_use_case.dart';
 import 'package:ev_charger_app/domain/use_case/logout_use_case.dart';
 import 'package:ev_charger_app/presentation/auth_status.dart';
@@ -24,6 +25,8 @@ void diSetup() async {
       KakaoAuthRepositoryImpl(api: getIt()));
   getIt.registerSingleton<KakaoLoginUseCase>(
       KakaoLoginUseCase(kakaoAuthRepository: getIt(), authRepository: getIt()));
+  getIt.registerSingleton<KakaoIsLoginUseCase>(
+      KakaoIsLoginUseCase(kakaoAuthRepository: getIt()));
   getIt.registerSingleton<GetUserModelUseCase>(
       GetUserModelUseCase(kakaoLoginUseCase: getIt(), repository: getIt()));
   getIt.registerSingleton<LogoutUseCase>(

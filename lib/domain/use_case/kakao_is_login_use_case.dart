@@ -1,13 +1,13 @@
 import 'package:ev_charger_app/domain/repository/kakao_auth_repository.dart';
 
-class IsLoginUseCase {
-  final KakaoAuthRepository _repository;
+class KakaoIsLoginUseCase {
+  final KakaoAuthRepository _kakaoAuthRepository;
 
-  const IsLoginUseCase({
-    required KakaoAuthRepository repository,
-  }) : _repository = repository;
+  const KakaoIsLoginUseCase({
+    required KakaoAuthRepository kakaoAuthRepository,
+  }) : _kakaoAuthRepository = kakaoAuthRepository;
 
   Future<bool> execute() async {
-    return await _repository.isLogin();
+    return await _kakaoAuthRepository.isLogin();
   }
 }
