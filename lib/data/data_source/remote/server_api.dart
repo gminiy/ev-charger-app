@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:ev_charger_app/domain/model/user_model.dart';
 
 class ServerAPi {
-  final String _baseUrl = 'http://localhost:3000';
+  final String _baseUrl = 'http://192.168.50.116:3000';
   final Dio _dio;
 
   const ServerAPi({
