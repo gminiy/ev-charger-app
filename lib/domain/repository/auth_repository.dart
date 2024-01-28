@@ -4,5 +4,5 @@ abstract interface class AuthRepository {
   Future<UserModel> login();
   Future<void> logout();
   Future<UserModel> update(UserModel newUser);
-  Future<UserModel> getUserModel(String id);
+  Future<UserModel?> getUserModel(String id);
 }

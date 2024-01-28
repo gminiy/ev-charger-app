@@ -9,11 +9,18 @@ class ServerAPi {
     required Dio dio,
   }) : _dio = dio;
 
-  Future<Map<String, dynamic>> getUser(String userId) async {
-    final response =
-        await _dio.get('$_baseUrl/user', queryParameters: {'id': userId});
+  Future<Map<String, dynamic>?> getUser(String userId) async {
+    try {
+      final response =
+      await _dio.get('$_baseUrl/user', queryParameters: {'id': userId});
+      return response.data;
+    } on DioException catch (e) {
+      if(e.response!.statusCode == 404) {
+        return null;
+      }
 
-    return response.data;
+      throw Exception();
+    }
   }
 
   Future<Map<String, dynamic>> registerUser(UserModel userModel) async {
