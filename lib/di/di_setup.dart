@@ -48,9 +48,11 @@ void diSetup() async {
   getIt.registerFactory<LoginViewModel>(
     () => LoginViewModel(kakaoLoginUseCase: getIt(), authStatus: getIt()),
   );
-  getIt.registerFactory<RegisterAddressViewModel>(() =>
-      RegisterAddressViewModel(
-          findAddressesUseCase: getIt(),
-          updateUserUseCase: getIt(),
-          getUserModelUseCase: getIt()));
+  getIt.registerFactory<RegisterAddressViewModel>(
+    () => RegisterAddressViewModel(
+      findAddressesUseCase: getIt(),
+      updateUserUseCase: getIt(),
+      getUserModelUseCase: getIt(),
+    ),
+  );
 }

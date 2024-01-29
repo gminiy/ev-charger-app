@@ -46,7 +46,7 @@ class RegisterAddressViewModel extends ChangeNotifier {
     });
   }
 
-  selectAddress(AddressModel address) async {
+  void selectAddress(AddressModel address) async {
     _state = state.copyWith(selected: address);
     notifyListeners();
   }
