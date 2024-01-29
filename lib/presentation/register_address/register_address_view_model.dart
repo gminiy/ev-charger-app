@@ -1,4 +1,5 @@
 import 'package:ev_charger_app/core/debounce.dart';
+import 'package:ev_charger_app/domain/model/address_model.dart';
 import 'package:ev_charger_app/domain/use_case/find_addresses_use_case.dart';
 import 'package:ev_charger_app/presentation/register_address/register_address_state.dart';
 import 'package:flutter/material.dart';
@@ -30,5 +31,10 @@ class RegisterAddressViewModel extends ChangeNotifier {
       _state = state.copyWith(isLoading: false, addresses: addresses);
       notifyListeners();
     });
+  }
+
+   selectAddress(AddressModel address) async {
+    _state = state.copyWith(selected: address);
+    notifyListeners();
   }
 }

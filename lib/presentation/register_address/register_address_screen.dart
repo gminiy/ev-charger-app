@@ -74,8 +74,13 @@ class _RegisterAddressScreenState extends State<RegisterAddressScreen> {
                       itemCount: viewModel.state.addresses.length,
                       itemBuilder: (BuildContext context, int index) {
                         return ListTile(
-                          title: Text(viewModel.state.addresses[index].address),
-                        );
+                            title:
+                                Text(viewModel.state.addresses[index].address),
+                            onTap: () {
+                              viewModel.selectAddress(
+                                  viewModel.state.addresses[index]);
+                              textEditingController.text = viewModel.state.addresses[index].address;
+                            });
                       },
                     ),
             ),
