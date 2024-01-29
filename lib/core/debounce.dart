@@ -12,4 +12,8 @@ class Debounce {
     }
     _timer = Timer(duration, () => callback());
   }
+
+  void cancel() {
+    _timer?.cancel();
+  }
 }

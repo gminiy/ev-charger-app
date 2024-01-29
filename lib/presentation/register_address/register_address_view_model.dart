@@ -15,10 +15,10 @@ class RegisterAddressViewModel extends ChangeNotifier {
   }) : _findAddressesUseCase = findAddressesUseCase;
 
   Future<void> fetchAddresses(String pattern) async {
-    print(pattern);
     if (pattern == '') {
       _state = state.copyWith(isLoading: false, addresses: []);
       notifyListeners();
+      _debounce.cancel();
       return;
     }
 

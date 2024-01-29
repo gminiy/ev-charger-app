@@ -65,10 +65,12 @@ class _RegisterAddressScreenState extends State<RegisterAddressScreen> {
                 ),
               ),
             ),
-            viewModel.state.isLoading
-                ? const CircularProgressIndicator()
-                : Expanded(
-                    child: ListView.builder(
+            Expanded(
+              child: viewModel.state.isLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : ListView.builder(
                       itemCount: viewModel.state.addresses.length,
                       itemBuilder: (BuildContext context, int index) {
                         return ListTile(
@@ -76,7 +78,7 @@ class _RegisterAddressScreenState extends State<RegisterAddressScreen> {
                         );
                       },
                     ),
-                  ),
+            ),
           ],
         ),
       ),
