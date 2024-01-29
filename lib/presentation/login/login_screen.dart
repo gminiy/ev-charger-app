@@ -13,7 +13,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
-    LoginViewModel viewModel = context.watch<LoginViewModel>();
+    final LoginViewModel viewModel = context.watch<LoginViewModel>();
 
     return Scaffold(
       body: Center(
