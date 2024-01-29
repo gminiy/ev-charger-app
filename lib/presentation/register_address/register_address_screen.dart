@@ -1,4 +1,6 @@
+import 'package:ev_charger_app/presentation/register_address/register_address_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RegisterAddressScreen extends StatefulWidget {
   const RegisterAddressScreen({super.key});
@@ -18,6 +20,8 @@ class _RegisterAddressScreenState extends State<RegisterAddressScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<RegisterAddressViewModel>();
+
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
@@ -25,15 +29,15 @@ class _RegisterAddressScreenState extends State<RegisterAddressScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               '주소를 입력해주세요.',
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 32),
-            Text(
+            const SizedBox(height: 32),
+            const Text(
               '주소',
               style: TextStyle(
                 fontSize: 16,
@@ -42,6 +46,9 @@ class _RegisterAddressScreenState extends State<RegisterAddressScreen> {
             ),
             TextField(
               controller: textEditingController,
+              onChanged: (value) {
+                viewModel.fetchAddresses(value);
+              },
               decoration: InputDecoration(
                 hintText: '주소 입력',
                 enabledBorder: UnderlineInputBorder(
@@ -57,7 +64,19 @@ class _RegisterAddressScreenState extends State<RegisterAddressScreen> {
                   ),
                 ),
               ),
-            )
+            ),
+            viewModel.state.isLoading
+                ? const CircularProgressIndicator()
+                : Expanded(
+                    child: ListView.builder(
+                      itemCount: viewModel.state.addresses.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ListTile(
+                          title: Text(viewModel.state.addresses[index].address),
+                        );
+                      },
+                    ),
+                  ),
           ],
         ),
       ),
