@@ -51,6 +51,15 @@ class _RegisterAddressScreenState extends State<RegisterAddressScreen> {
               },
               decoration: InputDecoration(
                 hintText: '주소 입력',
+                suffixIcon: textEditingController.text == ''
+                    ? null
+                    : IconButton(
+                        icon: const Icon(Icons.cancel_outlined),
+                        onPressed: () {
+                          textEditingController.text = '';
+                          viewModel.fetchAddresses('');
+                        },
+                      ),
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
                     width: 3,
