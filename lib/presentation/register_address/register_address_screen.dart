@@ -89,9 +89,11 @@ class _RegisterAddressScreenState extends State<RegisterAddressScreen> {
               width: double.infinity,
               height: 56,
               child: ElevatedButton(
-                onPressed: viewModel.state.selected == null ? null :  () {
-                  print(viewModel.state.selected);
-                },
+                onPressed: viewModel.state.selected == null
+                    ? null
+                    : () {
+                        print(viewModel.state.selected);
+                      },
                 child: const Text(
                   '입력 완료',
                   style: TextStyle(fontSize: 16),

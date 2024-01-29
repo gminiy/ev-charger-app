@@ -22,7 +22,7 @@ final getIt = GetIt.instance;
 void diSetup() async {
   final dio = Dio();
 
-  getIt.registerSingleton<ServerAPi>(ServerAPi(dio: dio));
+  getIt.registerSingleton<ServerApi>(ServerApi(dio: dio));
   getIt.registerSingleton<KakaoApi>(KakaoApi());
   getIt.registerSingleton<AuthRepository>(AuthRepositoryImpl(api: getIt()));
   getIt.registerSingleton<KakaoAuthRepository>(

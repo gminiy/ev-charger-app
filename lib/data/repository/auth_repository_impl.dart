@@ -3,10 +3,10 @@ import 'package:ev_charger_app/domain/model/user_model.dart';
 import 'package:ev_charger_app/domain/repository/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  final ServerAPi _api;
+  final ServerApi _api;
 
   const AuthRepositoryImpl({
-    required ServerAPi api,
+    required ServerApi api,
   }) : _api = api;
 
   @override

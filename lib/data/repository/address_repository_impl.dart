@@ -3,10 +3,10 @@ import 'package:ev_charger_app/domain/model/address_model.dart';
 import 'package:ev_charger_app/domain/repository/address_repository.dart';
 
 class AddressRepositoryImpl implements AddressRepository {
-  final ServerAPi _api;
+  final ServerApi _api;
 
   const AddressRepositoryImpl({
-    required ServerAPi api,
+    required ServerApi api,
   }) : _api = api;
 
   @override
