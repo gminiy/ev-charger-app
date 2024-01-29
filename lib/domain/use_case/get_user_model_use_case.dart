@@ -1,24 +1,28 @@
 import 'package:ev_charger_app/domain/model/user_model.dart';
 import 'package:ev_charger_app/domain/repository/auth_repository.dart';
-import 'package:ev_charger_app/domain/use_case/kakao_login_use_case.dart';
+import 'package:ev_charger_app/domain/repository/kakao_auth_repository.dart';
 
 // Todo: 지금은 kakao login만 사용 가능. jwt 사용시 변경 예정
 class GetUserModelUseCase {
-  final AuthRepository _repository;
-  final KakaoLoginUseCase _kakaoLoginUseCase;
+  final AuthRepository _authRepository;
+  final KakaoAuthRepository _kakaoAuthRepository;
   UserModel? _userModel;
 
   GetUserModelUseCase({
-    required AuthRepository repository,
-    required KakaoLoginUseCase kakaoLoginUseCase,
-  })  : _repository = repository,
-        _kakaoLoginUseCase = kakaoLoginUseCase;
+    required AuthRepository authRepository,
+    required KakaoAuthRepository kakaoAuthRepository,
+  })  : _authRepository = authRepository,
+        _kakaoAuthRepository = kakaoAuthRepository;
 
   Future<UserModel> execute({bool needRefreshCache = false}) async {
-    _userModel = _userModel ?? await _kakaoLoginUseCase.execute();
+    if (_userModel == null) {
+      final UserModel kakaoUserModel =
+          await _kakaoAuthRepository.getUserModel();
+      _userModel = await _authRepository.getUserModel(kakaoUserModel.id);
+    }
 
     if (needRefreshCache) {
-      _userModel = await _repository.getUserModel(_userModel!.id);
+      _userModel = await _authRepository.getUserModel(_userModel!.id);
     }
 
     return _userModel!;

@@ -9,6 +9,9 @@ final router = GoRouter(
   initialLocation: '/',
   routes: [
     GoRoute(
+        path: '/register-address',
+        builder: (context, state) => const LoginScreen()),
+    GoRoute(
       path: '/login',
       builder: (context, state) => ChangeNotifierProvider(
         create: (context) => getIt<LoginViewModel>(),
@@ -24,6 +27,10 @@ final router = GoRouter(
 
     if (!(getIt<AuthStatus>().isLogin)) {
       return '/login';
+    }
+
+    if (getIt<AuthStatus>().addressId == null) {
+      return '/register-address';
     }
 
     return null;

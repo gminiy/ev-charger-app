@@ -27,8 +27,8 @@ void diSetup() async {
       KakaoLoginUseCase(kakaoAuthRepository: getIt(), authRepository: getIt()));
   getIt.registerSingleton<KakaoIsLoginUseCase>(
       KakaoIsLoginUseCase(kakaoAuthRepository: getIt()));
-  getIt.registerSingleton<GetUserModelUseCase>(
-      GetUserModelUseCase(kakaoLoginUseCase: getIt(), repository: getIt()));
+  getIt.registerSingleton<GetUserModelUseCase>(GetUserModelUseCase(
+      kakaoAuthRepository: getIt(), authRepository: getIt()));
   getIt.registerSingleton<LogoutUseCase>(
       LogoutUseCase(kakaoAuthRepository: getIt()));
   getIt.registerSingleton<AuthStatus>(AuthStatus());

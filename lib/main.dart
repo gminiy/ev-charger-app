@@ -1,4 +1,6 @@
 import 'package:ev_charger_app/di/di_setup.dart';
+import 'package:ev_charger_app/domain/model/user_model.dart';
+import 'package:ev_charger_app/domain/use_case/get_user_model_use_case.dart';
 import 'package:ev_charger_app/domain/use_case/kakao_is_login_use_case.dart';
 import 'package:ev_charger_app/presentation/auth_status.dart';
 import 'package:ev_charger_app/route/router.dart';
@@ -9,8 +11,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: '.env');
   diSetup();
+  // await getIt<LogoutUseCase>().execute();
   final isLogin = await getIt<KakaoIsLoginUseCase>().execute();
-  getIt<AuthStatus>().setIsLogin(isLogin);
+
+  if (isLogin) {
+    final UserModel userModel = await getIt<GetUserModelUseCase>().execute();
+    getIt<AuthStatus>().setAddressId(userModel.addressId);
+  }
 
   runApp(const MyApp());
 }
