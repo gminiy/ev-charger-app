@@ -11,12 +11,12 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: '.env');
   diSetup();
-  // await getIt<LogoutUseCase>().execute();
   final isLogin = await getIt<KakaoIsLoginUseCase>().execute();
 
   if (isLogin) {
     final UserModel userModel = await getIt<GetUserModelUseCase>().execute();
     getIt<AuthStatus>().setAddressId(userModel.addressId);
+    getIt<AuthStatus>().setIsLogin(true);
   }
 
   runApp(const MyApp());
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       routerConfig: router,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.pink),
         useMaterial3: true,
       ),
     );

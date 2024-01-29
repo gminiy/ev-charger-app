@@ -19,27 +19,47 @@ class _RegisterAddressScreenState extends State<RegisterAddressScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('주소 입력')),
-      body: Column(
-        children: [
-          Text(
-            '주소를 입력해주세요.',
-            style: TextStyle(fontSize: 64, fontWeight: FontWeight.bold),
-          ),
-          Text('주소'),
-          TextField(
-            controller: textEditingController,
-            decoration: InputDecoration(
-              hintText: '주소 입력',
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(width: 3),
-              ),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(width: 3),
+      appBar: AppBar(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '주소를 입력해주세요.',
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
               ),
             ),
-          )
-        ],
+            SizedBox(height: 32),
+            Text(
+              '주소',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            TextField(
+              controller: textEditingController,
+              decoration: InputDecoration(
+                hintText: '주소 입력',
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    width: 3,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    width: 3,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

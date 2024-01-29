@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:ev_charger_app/domain/model/user_model.dart';
 
 class ServerAPi {
-  final String _baseUrl = 'http://10.0.2.2:8080';
+  final String _baseUrl = 'http://localhost:8080';
   final Dio _dio;
 
   const ServerAPi({
@@ -15,6 +15,7 @@ class ServerAPi {
           await _dio.get('$_baseUrl/user', queryParameters: {'id': userId});
       return response.data;
     } on DioException catch (e) {
+      print(e);
       if (e.response!.statusCode == 404) {
         return null;
       }
