@@ -92,7 +92,7 @@ class _RegisterAddressScreenState extends State<RegisterAddressScreen> {
                 onPressed: viewModel.state.selected == null
                     ? null
                     : () {
-                        print(viewModel.state.selected);
+                        viewModel.registerAddress(viewModel.state.selected!);
                       },
                 child: const Text(
                   '입력 완료',

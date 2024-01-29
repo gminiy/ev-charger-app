@@ -12,6 +12,7 @@ import 'package:ev_charger_app/domain/use_case/get_user_model_use_case.dart';
 import 'package:ev_charger_app/domain/use_case/kakao_is_login_use_case.dart';
 import 'package:ev_charger_app/domain/use_case/kakao_login_use_case.dart';
 import 'package:ev_charger_app/domain/use_case/logout_use_case.dart';
+import 'package:ev_charger_app/domain/use_case/update_user_use_case.dart';
 import 'package:ev_charger_app/presentation/auth_status.dart';
 import 'package:ev_charger_app/presentation/login/login_view_model.dart';
 import 'package:ev_charger_app/presentation/register_address/register_address_view_model.dart';
@@ -39,12 +40,17 @@ void diSetup() async {
       LogoutUseCase(kakaoAuthRepository: getIt()));
   getIt.registerSingleton<FindAddressesUseCase>(
       FindAddressesUseCase(addressRepository: getIt()));
+  getIt.registerSingleton<UpdateUserUseCase>(
+      UpdateUserUseCase(authRepository: getIt(), getUserModelUseCase: getIt()));
+
   getIt.registerSingleton<AuthStatus>(AuthStatus());
 
   getIt.registerFactory<LoginViewModel>(
     () => LoginViewModel(kakaoLoginUseCase: getIt(), authStatus: getIt()),
   );
-  getIt.registerFactory<RegisterAddressViewModel>(
-    () => RegisterAddressViewModel(findAddressesUseCase: getIt()),
-  );
+  getIt.registerFactory<RegisterAddressViewModel>(() =>
+      RegisterAddressViewModel(
+          findAddressesUseCase: getIt(),
+          updateUserUseCase: getIt(),
+          getUserModelUseCase: getIt()));
 }
