@@ -16,6 +16,9 @@ class RegisterAddressViewModel extends ChangeNotifier {
   }) : _findAddressesUseCase = findAddressesUseCase;
 
   Future<void> fetchAddresses(String pattern) async {
+    _state = state.copyWith(selected: null);
+    notifyListeners();
+
     if (pattern == '') {
       _state = state.copyWith(isLoading: false, addresses: []);
       notifyListeners();
@@ -28,12 +31,13 @@ class RegisterAddressViewModel extends ChangeNotifier {
       notifyListeners();
 
       final addresses = await _findAddressesUseCase.execute(pattern);
-      _state = state.copyWith(isLoading: false, addresses: addresses);
+      _state = state.copyWith(
+          isLoading: false, addresses: addresses, selected: null);
       notifyListeners();
     });
   }
 
-   selectAddress(AddressModel address) async {
+  selectAddress(AddressModel address) async {
     _state = state.copyWith(selected: address);
     notifyListeners();
   }

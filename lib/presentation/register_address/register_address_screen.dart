@@ -79,11 +79,25 @@ class _RegisterAddressScreenState extends State<RegisterAddressScreen> {
                             onTap: () {
                               viewModel.selectAddress(
                                   viewModel.state.addresses[index]);
-                              textEditingController.text = viewModel.state.addresses[index].address;
+                              textEditingController.text =
+                                  viewModel.state.addresses[index].address;
                             });
                       },
                     ),
             ),
+            Container(
+              width: double.infinity,
+              height: 56,
+              child: ElevatedButton(
+                onPressed: viewModel.state.selected == null ? null :  () {
+                  print(viewModel.state.selected);
+                },
+                child: const Text(
+                  '입력 완료',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+            )
           ],
         ),
       ),
