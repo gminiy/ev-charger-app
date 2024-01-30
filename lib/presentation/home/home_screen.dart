@@ -75,7 +75,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            // 로그아웃 버튼을 바닥에 고정
             Container(
               child: ListTile(
                 leading: const Icon(
