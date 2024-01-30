@@ -27,7 +27,7 @@ class HomeViewModel extends ChangeNotifier {
     _state = _state.copyWith(userModel: user);
     final chargers =
         await _getChargersUseCase.execute(user.addressId ?? 'undefined');
-    _state = _state.copyWith(chargerModels: chargers);
+    _state = state.copyWith(chargerModels: chargers);
     notifyListeners();
   }
 
