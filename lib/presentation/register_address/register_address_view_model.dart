@@ -4,10 +4,12 @@ import 'package:ev_charger_app/domain/model/user_model.dart';
 import 'package:ev_charger_app/domain/use_case/find_addresses_use_case.dart';
 import 'package:ev_charger_app/domain/use_case/get_user_model_use_case.dart';
 import 'package:ev_charger_app/domain/use_case/update_user_use_case.dart';
+import 'package:ev_charger_app/presentation/auth_status.dart';
 import 'package:ev_charger_app/presentation/register_address/register_address_state.dart';
 import 'package:flutter/material.dart';
 
 class RegisterAddressViewModel extends ChangeNotifier {
+  final AuthStatus _authStatus;
   final FindAddressesUseCase _findAddressesUseCase;
   final UpdateUserUseCase _updateUserUseCase;
   final GetUserModelUseCase _getUserModelUseCase;
@@ -17,12 +19,14 @@ class RegisterAddressViewModel extends ChangeNotifier {
   RegisterAddressState get state => _state;
 
   RegisterAddressViewModel({
+    required AuthStatus authStatus,
     required FindAddressesUseCase findAddressesUseCase,
     required UpdateUserUseCase updateUserUseCase,
     required GetUserModelUseCase getUserModelUseCase,
   })  : _findAddressesUseCase = findAddressesUseCase,
         _updateUserUseCase = updateUserUseCase,
-        _getUserModelUseCase = getUserModelUseCase;
+        _getUserModelUseCase = getUserModelUseCase,
+        _authStatus = authStatus;
 
   Future<void> fetchAddresses(String pattern) async {
     _state = state.copyWith(selected: null);
@@ -55,5 +59,6 @@ class RegisterAddressViewModel extends ChangeNotifier {
     final UserModel user = await _getUserModelUseCase.execute();
     final UserModel newUser = user.copyWith(addressId: address.id);
     await _updateUserUseCase.execute(newUser);
+    _authStatus.setAddressId(newUser.addressId);
   }
 }

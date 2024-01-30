@@ -1,5 +1,6 @@
 import 'package:ev_charger_app/presentation/register_address/register_address_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class RegisterAddressScreen extends StatefulWidget {
@@ -106,8 +107,12 @@ class _RegisterAddressScreenState extends State<RegisterAddressScreen> {
                   child: ElevatedButton(
                     onPressed: viewModel.state.selected == null
                         ? null
-                        : () {
-                            viewModel.registerAddress(viewModel.state.selected!);
+                        : () async {
+                            await viewModel.registerAddress(viewModel.state.selected!);
+
+                            if (!mounted) return;
+
+                            context.go('/');
                           },
                     child: const Text(
                       '입력 완료',
