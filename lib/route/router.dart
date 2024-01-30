@@ -1,5 +1,7 @@
 import 'package:ev_charger_app/di/di_setup.dart';
 import 'package:ev_charger_app/presentation/auth_status.dart';
+import 'package:ev_charger_app/presentation/home/home_screen.dart';
+import 'package:ev_charger_app/presentation/home/home_view_model.dart';
 import 'package:ev_charger_app/presentation/login/login_screen.dart';
 import 'package:ev_charger_app/presentation/login/login_view_model.dart';
 import 'package:ev_charger_app/presentation/register_address/register_address_screen.dart';
@@ -10,6 +12,13 @@ import 'package:provider/provider.dart';
 final router = GoRouter(
   initialLocation: '/',
   routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) => ChangeNotifierProvider(
+        create: (context) => getIt<HomeViewModel>(),
+        child: const HomeScreen(),
+      ),
+    ),
     GoRoute(
       path: '/register-address',
       builder: (context, state) => ChangeNotifierProvider(
