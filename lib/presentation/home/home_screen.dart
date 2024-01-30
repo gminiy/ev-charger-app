@@ -41,15 +41,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    Future.microtask(() async {
-      final viewModel = context.read<HomeViewModel>();
-      await viewModel.init();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<HomeViewModel>();
 

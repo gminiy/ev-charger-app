@@ -18,7 +18,9 @@ class HomeViewModel extends ChangeNotifier {
     required LogoutUseCase logoutUseCase,
   })  : _getUserModelUseCase = getUserModelUseCase,
         _getChargersUseCase = getChargersUseCase,
-        _logoutUseCase = logoutUseCase;
+        _logoutUseCase = logoutUseCase {
+    init();
+  }
 
   Future<void> init() async {
     final user = await _getUserModelUseCase.execute();
