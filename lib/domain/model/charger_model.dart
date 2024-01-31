@@ -9,6 +9,7 @@ part 'charger_model.g.dart';
 class ChargerModel with _$ChargerModel {
   const factory ChargerModel({
     required String id,
+    required String addressId,
     required int chargeType,
     required String location,
     required int status,
