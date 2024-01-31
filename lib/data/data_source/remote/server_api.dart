@@ -57,7 +57,7 @@ class ServerApi {
 
   Future<List<dynamic>> getChargers(String addressId) async {
     final response = await _dio
-        .get('$_baseUrl/charger', queryParameters: {'addressId': addressId});
+        .get('$_baseUrl/charger/address', queryParameters: {'addressId': addressId});
 
     return response.data;
   }
