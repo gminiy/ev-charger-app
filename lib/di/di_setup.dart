@@ -17,6 +17,7 @@ import 'package:ev_charger_app/domain/use_case/kakao_login_use_case.dart';
 import 'package:ev_charger_app/domain/use_case/logout_use_case.dart';
 import 'package:ev_charger_app/domain/use_case/update_user_use_case.dart';
 import 'package:ev_charger_app/presentation/auth_status.dart';
+import 'package:ev_charger_app/presentation/home/component/drawer_view_model.dart';
 import 'package:ev_charger_app/presentation/home/home_view_model.dart';
 import 'package:ev_charger_app/presentation/login/login_view_model.dart';
 import 'package:ev_charger_app/presentation/register_address/register_address_view_model.dart';
@@ -68,6 +69,12 @@ void diSetup() async {
     () => HomeViewModel(
       logoutUseCase: getIt(),
       getChargersUseCase: getIt(),
+      getUserModelUseCase: getIt(),
+    ),
+  );
+  getIt.registerFactory<DrawerViewModel>(
+    () => DrawerViewModel(
+      logoutUseCase: getIt(),
       getUserModelUseCase: getIt(),
     ),
   );

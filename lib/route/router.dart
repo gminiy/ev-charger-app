@@ -1,6 +1,7 @@
 import 'package:ev_charger_app/di/di_setup.dart';
 import 'package:ev_charger_app/presentation/auth_status.dart';
 import 'package:ev_charger_app/presentation/charger_detail/charger_detail_screen.dart';
+import 'package:ev_charger_app/presentation/home/component/drawer_view_model.dart';
 import 'package:ev_charger_app/presentation/home/home_screen.dart';
 import 'package:ev_charger_app/presentation/home/home_view_model.dart';
 import 'package:ev_charger_app/presentation/login/login_screen.dart';
@@ -15,8 +16,11 @@ final router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => ChangeNotifierProvider(
-        create: (context) => getIt<HomeViewModel>(),
+      builder: (context, state) => MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => getIt<HomeViewModel>()),
+          ChangeNotifierProvider(create: (context) => getIt<DrawerViewModel>()),
+        ],
         child: const HomeScreen(),
       ),
     ),
@@ -40,7 +44,8 @@ final router = GoRouter(
         final userId = state.uri.queryParameters['userId'];
         final chargerId = state.uri.queryParameters['chargerId'];
         final location = state.uri.queryParameters['location'];
-        return ChargerDetailScreen(chargerId: chargerId, location: location, userId: userId);
+        return ChargerDetailScreen(
+            chargerId: chargerId, location: location, userId: userId);
       },
     ),
   ],
