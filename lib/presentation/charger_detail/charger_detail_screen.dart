@@ -59,6 +59,8 @@ class _ChargerDetailScreenState extends State<ChargerDetailScreen> {
                   return;
                 }
 
+                if (!mounted) return;
+
                 context.pop();
                 return;
               },
