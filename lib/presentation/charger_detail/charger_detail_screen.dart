@@ -6,12 +6,15 @@ import 'package:go_router/go_router.dart';
 class ChargerDetailScreen extends StatefulWidget {
   final String? _chargerId;
   final String? _userId;
+  final String? _location;
 
   const ChargerDetailScreen({
     super.key,
     String? chargerId,
     String? userId,
+    String? location,
   })  : _chargerId = chargerId,
+        _location = location,
         _userId = userId;
 
   @override
@@ -21,6 +24,7 @@ class ChargerDetailScreen extends StatefulWidget {
 class _ChargerDetailScreenState extends State<ChargerDetailScreen> {
   String? chargerId;
   String? userId;
+  String? location;
 
   InAppWebViewController? webViewController;
 
@@ -29,6 +33,7 @@ class _ChargerDetailScreenState extends State<ChargerDetailScreen> {
     super.initState();
     chargerId = widget._chargerId;
     userId = widget._userId;
+    location = widget._location;
   }
 
   InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
@@ -47,7 +52,14 @@ class _ChargerDetailScreenState extends State<ChargerDetailScreen> {
     final bool hasInitData = (userId != null && chargerId != null);
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(location == null ? '' : location!),
+        titleTextStyle: const TextStyle(
+          fontSize: 21,
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       body: hasInitData
           ? PopScope(
               canPop: false,

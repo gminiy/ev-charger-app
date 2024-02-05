@@ -39,7 +39,8 @@ final router = GoRouter(
       builder: (context, state) {
         final userId = state.uri.queryParameters['userId'];
         final chargerId = state.uri.queryParameters['chargerId'];
-        return ChargerDetailScreen(chargerId: chargerId, userId: userId);
+        final location = state.uri.queryParameters['location'];
+        return ChargerDetailScreen(chargerId: chargerId, location: location, userId: userId);
       },
     ),
   ],

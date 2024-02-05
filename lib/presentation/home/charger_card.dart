@@ -32,7 +32,7 @@ class ChargerCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         context.push(
-          '/charger-detail?userId=${user.id}&chargerId=${charger.id}',
+          '/charger-detail?userId=${user.id}&chargerId=${charger.id}&location=${charger.location}',
         );
       },
       child: Card(
