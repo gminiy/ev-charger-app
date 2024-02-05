@@ -34,4 +34,31 @@ class HomeViewModel extends ChangeNotifier {
   Future<void> logout() async {
     await _logoutUseCase.execute();
   }
+
+  void toggleStatusFilter() {
+    _state = state.copyWith(
+      isToggledTypeFilter: false,
+      isToggledOutputFilter: false,
+      isToggledStatusFilter: !state.isToggledStatusFilter,
+    );
+    notifyListeners();
+  }
+
+  void toggleTypeFilter() {
+    _state = state.copyWith(
+      isToggledStatusFilter: false,
+      isToggledOutputFilter: false,
+      isToggledTypeFilter: !state.isToggledTypeFilter,
+    );
+    notifyListeners();
+  }
+
+  void toggleOutputFilter() {
+    _state = state.copyWith(
+      isToggledStatusFilter: false,
+      isToggledTypeFilter: false,
+      isToggledOutputFilter: !state.isToggledOutputFilter,
+    );
+    notifyListeners();
+  }
 }

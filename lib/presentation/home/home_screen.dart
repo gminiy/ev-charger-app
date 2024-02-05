@@ -32,11 +32,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   ? const Text('')
                   : Text(viewModel.state.userModel!.address ?? 'undefined'),
               titleTextStyle: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
-              bottom: PreferredSize(
-                preferredSize: const Size.fromHeight(30),
+                color: Colors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+              bottom: const PreferredSize(
+                preferredSize: Size.fromHeight(30),
                 child: FilterSection(),
               ),
             ),

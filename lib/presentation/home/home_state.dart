@@ -11,8 +11,12 @@ part 'home_state.g.dart';
 class HomeState with _$HomeState {
   const factory HomeState({
     UserModel? userModel,
-    @Default([]) List<ChargerModel> chargerModels
+    @Default([]) List<ChargerModel> chargerModels,
+    @Default(false) bool isToggledStatusFilter,
+    @Default(false) bool isToggledTypeFilter,
+    @Default(false) bool isToggledOutputFilter,
   }) = _HomeState;
 
-  factory HomeState.fromJson(Map<String, Object?> json) => _$HomeStateFromJson(json);
+  factory HomeState.fromJson(Map<String, Object?> json) =>
+      _$HomeStateFromJson(json);
 }
