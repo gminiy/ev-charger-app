@@ -1,5 +1,5 @@
 import 'package:ev_charger_app/presentation/home/component/charger_card.dart';
-import 'package:ev_charger_app/presentation/home/component/drawer_screen.dart';
+import 'package:ev_charger_app/presentation/home/component/drawer_section.dart';
 import 'package:ev_charger_app/presentation/home/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,14 +11,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-final _filters = [
-  "filter1",
-  "filter2333333",
-  "filter3222",
-  "filt",
-  "filter5444",
-  "filter6",
-];
+final _filters = ["충전 상태"];
 
 class _HomeScreenState extends State<HomeScreen> {
   Widget _buildFilterCard(String title) {
@@ -44,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final viewModel = context.watch<HomeViewModel>();
 
     return Scaffold(
-      drawer: viewModel.state.userModel == null ? null : const DrawerScreen(),
+      drawer: const DrawerSection(),
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: CustomScrollView(

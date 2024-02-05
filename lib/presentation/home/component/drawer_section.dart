@@ -1,19 +1,19 @@
-import 'package:ev_charger_app/presentation/home/component/drawer_view_model.dart';
+import 'package:ev_charger_app/presentation/home/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-class DrawerScreen extends StatefulWidget {
-  const DrawerScreen({super.key});
+class DrawerSection extends StatefulWidget {
+  const DrawerSection({super.key});
 
   @override
-  State<DrawerScreen> createState() => _DrawerScreenState();
+  State<DrawerSection> createState() => _DrawerSectionState();
 }
 
-class _DrawerScreenState extends State<DrawerScreen> {
+class _DrawerSectionState extends State<DrawerSection> {
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.watch<DrawerViewModel>();
+    final viewModel = context.watch<HomeViewModel>();
     return Drawer(
       child: Column(
         children: [
@@ -23,7 +23,9 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
-                    viewModel.user == null ? '' : viewModel.user!.nickname,
+                    viewModel.state.userModel == null
+                        ? ''
+                        : viewModel.state.userModel!.nickname,
                     style: const TextStyle(
                         fontSize: 16.0, fontWeight: FontWeight.bold),
                   ),
