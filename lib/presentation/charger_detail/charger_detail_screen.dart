@@ -50,7 +50,7 @@ class _ChargerDetailScreenState extends State<ChargerDetailScreen> {
       body: hasInitData
           ? InAppWebView(
               initialUrlRequest: URLRequest(
-                url: Uri.parse('http://10.0.2.2:3001'),
+                url: Uri.parse('http://10.0.2.2:3000'),
               ),
               initialOptions: options,
               onWebViewCreated: (controller) {
@@ -64,7 +64,7 @@ class _ChargerDetailScreenState extends State<ChargerDetailScreen> {
                         "userId": userId,
                       },
                     );
-                    print(data);
+
                     return data;
                   },
                 );
