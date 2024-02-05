@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:go_router/go_router.dart';
 
 class ChargerDetailScreen extends StatefulWidget {
   final String? _chargerId;
@@ -48,27 +49,41 @@ class _ChargerDetailScreenState extends State<ChargerDetailScreen> {
     return Scaffold(
       appBar: AppBar(),
       body: hasInitData
-          ? InAppWebView(
-              initialUrlRequest: URLRequest(
-                url: Uri.parse('http://10.0.2.2:3000'),
-              ),
-              initialOptions: options,
-              onWebViewCreated: (controller) {
-                webViewController = controller;
-                controller.addJavaScriptHandler(
-                  handlerName: 'initDataHandler',
-                  callback: (args) {
-                    final data = jsonEncode(
-                      {
-                        "chargerId": chargerId,
-                        "userId": userId,
-                      },
-                    );
+          ? PopScope(
+              canPop: false,
+              onPopInvoked: (didPop) async {
+                final canGoBack = await webViewController?.canGoBack() ?? false;
 
-                    return data;
-                  },
-                );
+                if (canGoBack) {
+                  webViewController?.goBack();
+                  return;
+                }
+
+                context.pop();
+                return;
               },
+              child: InAppWebView(
+                initialUrlRequest: URLRequest(
+                  url: Uri.parse('http://10.0.2.2:3000'),
+                ),
+                initialOptions: options,
+                onWebViewCreated: (controller) {
+                  webViewController = controller;
+                  controller.addJavaScriptHandler(
+                    handlerName: 'initDataHandler',
+                    callback: (args) {
+                      final data = jsonEncode(
+                        {
+                          "chargerId": chargerId,
+                          "userId": userId,
+                        },
+                      );
+
+                      return data;
+                    },
+                  );
+                },
+              ),
             )
           : const Center(
               child: Text('잘못된 접근입니다. 다시 시도해주세요.'),
