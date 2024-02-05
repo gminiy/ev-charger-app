@@ -1,5 +1,6 @@
 import 'package:ev_charger_app/presentation/home/component/charger_card.dart';
 import 'package:ev_charger_app/presentation/home/component/drawer_section.dart';
+import 'package:ev_charger_app/presentation/home/component/filter_section.dart';
 import 'package:ev_charger_app/presentation/home/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,27 +12,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-final _filters = ["충전 상태"];
-
 class _HomeScreenState extends State<HomeScreen> {
-  Widget _buildFilterCard(String title) {
-    return Card(
-      elevation: 0.0,
-      margin: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24.0),
-        side: const BorderSide(color: Color(0xFFDEE1E4), width: 1.0),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        child: Text(
-          title,
-          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<HomeViewModel>();
@@ -56,13 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   fontWeight: FontWeight.bold),
               bottom: PreferredSize(
                 preferredSize: const Size.fromHeight(30),
-                child: SizedBox(
-                  height: 40,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: _filters.map(_buildFilterCard).toList(),
-                  ),
-                ),
+                child: FilterSection(),
               ),
             ),
             if (viewModel.state.userModel != null)
