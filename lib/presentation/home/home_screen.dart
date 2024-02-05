@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final viewModel = context.watch<HomeViewModel>();
 
-    Widget _buildDrawer(UserModel user) {
+    Widget buildDrawer(UserModel user) {
       return Drawer(
         child: Column(
           children: [
@@ -96,13 +96,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       drawer: viewModel.state.userModel == null
           ? null
-          : _buildDrawer(viewModel.state.userModel!),
+          : buildDrawer(viewModel.state.userModel!),
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
-              // snap: true,
               floating: true,
               backgroundColor: Colors.white,
               centerTitle: false,
@@ -125,11 +124,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            SliverList(
-              delegate: SliverChildListDelegate(viewModel.state.chargerModels
-                  .map((e) => ChargerCard(charger: e))
-                  .toList()),
-            ),
+            if (viewModel.state.userModel != null)
+              SliverList(
+                delegate: SliverChildListDelegate(
+                  viewModel.state.chargerModels
+                      .map(
+                        (e) => ChargerCard(
+                          charger: e,
+                          user: viewModel.state.userModel!,
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
           ],
         ),
       ),
