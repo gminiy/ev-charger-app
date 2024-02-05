@@ -1,4 +1,4 @@
-import 'package:ev_charger_app/presentation/home/charger_card.dart';
+import 'package:ev_charger_app/presentation/home/component/charger_card.dart';
 import 'package:ev_charger_app/presentation/home/component/drawer_screen.dart';
 import 'package:ev_charger_app/presentation/home/home_view_model.dart';
 import 'package:flutter/material.dart';
