@@ -19,43 +19,34 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       drawer: const DrawerSection(),
-      body: Padding(
-        padding: const EdgeInsets.all(8),
-        child: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              floating: true,
-              backgroundColor: Colors.white,
-              centerTitle: false,
-              expandedHeight: 44,
-              title: viewModel.state.userModel == null
-                  ? const Text('')
-                  : Text(viewModel.state.userModel!.address ?? 'undefined'),
-              titleTextStyle: const TextStyle(
-                color: Colors.black,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+      appBar: AppBar(
+          title: viewModel.state.userModel == null
+              ? const Text('')
+              : Text(viewModel.state.userModel!.address ?? 'undefined'),
+          titleTextStyle: const TextStyle(
+            color: Colors.black,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+          backgroundColor: Colors.white,
+          bottomOpacity: 1.0,
+          scrolledUnderElevation: 0),
+      body: Column(
+        children: [
+          FilterSection(),
+          if (viewModel.state.userModel != null)
+            Expanded(
+              child: ListView.builder(
+                itemCount: viewModel.state.chargerModels.length,
+                itemBuilder: (context, index) {
+                  return ChargerCard(
+                    charger: viewModel.state.chargerModels[index],
+                    user: viewModel.state.userModel!,
+                  );
+                },
               ),
-              bottom: const PreferredSize(
-                preferredSize: Size.fromHeight(30),
-                child: FilterSection(),
-              ),
-            ),
-            if (viewModel.state.userModel != null)
-              SliverList(
-                delegate: SliverChildListDelegate(
-                  viewModel.state.chargerModels
-                      .map(
-                        (e) => ChargerCard(
-                          charger: e,
-                          user: viewModel.state.userModel!,
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
-          ],
-        ),
+            )
+        ],
       ),
     );
   }
