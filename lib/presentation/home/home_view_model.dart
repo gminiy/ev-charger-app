@@ -73,8 +73,8 @@ class HomeViewModel extends ChangeNotifier {
     final List<ChargerTypeFilter> defaultTypeFilters = chargerTypeMap.keys
         .map(
           (e) => ChargerTypeFilter(
-              label: chargerStatusMap[e]!['label'] as String,
-              index: chargerStatusMap[e]!['index'] as int,
+              label: chargerTypeMap[e]!['label'] as String,
+              index: chargerTypeMap[e]!['index'] as int,
               isSelected: true),
         )
         .toList();
