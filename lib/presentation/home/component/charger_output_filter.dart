@@ -10,7 +10,6 @@ class ChargerOutputFilter with _$ChargerOutputFilter {
   const factory ChargerOutputFilter({
     required int minOutput,
     required int maxOutput,
-    required bool isSelected,
   }) = _ChargerOutputFilter;
 
   factory ChargerOutputFilter.fromJson(Map<String, Object?> json) => _$ChargerOutputFilterFromJson(json);

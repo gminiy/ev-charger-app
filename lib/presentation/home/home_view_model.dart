@@ -1,9 +1,11 @@
 import 'package:ev_charger_app/domain/model/charger_model.dart';
+import 'package:ev_charger_app/domain/use_case/filter_charger_output_use_case.dart';
 import 'package:ev_charger_app/domain/use_case/filter_charger_status_use_case.dart';
 import 'package:ev_charger_app/domain/use_case/filter_charger_type_use_case.dart';
 import 'package:ev_charger_app/domain/use_case/get_chargers_use_case.dart';
 import 'package:ev_charger_app/domain/use_case/get_user_model_use_case.dart';
 import 'package:ev_charger_app/domain/use_case/logout_use_case.dart';
+import 'package:ev_charger_app/presentation/home/component/charger_output_filter.dart';
 import 'package:ev_charger_app/presentation/home/component/charger_status_filter.dart';
 import 'package:ev_charger_app/presentation/home/component/charger_type_filter.dart';
 import 'package:ev_charger_app/presentation/home/home_state.dart';
@@ -18,6 +20,7 @@ class HomeViewModel extends ChangeNotifier {
   final LogoutUseCase _logoutUseCase;
   final FilterChargerStatusUseCase _filterChargerStatusUseCase;
   final FilterChargerTypeUseCase _filterChargerTypeUseCase;
+  final FilterChargerOutputUseCase _filterChargerOutputUseCase;
 
   HomeState get state => _state;
 
@@ -27,11 +30,13 @@ class HomeViewModel extends ChangeNotifier {
     required LogoutUseCase logoutUseCase,
     required FilterChargerStatusUseCase filterChargerStatusUseCase,
     required FilterChargerTypeUseCase filterChargerTypeUseCase,
+    required FilterChargerOutputUseCase filterChargerOutputUseCase,
   })  : _getUserModelUseCase = getUserModelUseCase,
         _getChargersUseCase = getChargersUseCase,
         _logoutUseCase = logoutUseCase,
         _filterChargerStatusUseCase = filterChargerStatusUseCase,
-        _filterChargerTypeUseCase = filterChargerTypeUseCase {
+        _filterChargerTypeUseCase = filterChargerTypeUseCase,
+        _filterChargerOutputUseCase = filterChargerOutputUseCase {
     init();
   }
 
@@ -57,6 +62,13 @@ class HomeViewModel extends ChangeNotifier {
         .toList();
     chargers = _filterChargerTypeUseCase.execute(chargers, typeFilterIndexes);
 
+    if (state.outputFiler == null) {
+      _state = state.copyWith(chargerModels: chargers);
+      return;
+    }
+    chargers = _filterChargerOutputUseCase.execute(
+        chargers, state.outputFiler!.minOutput, state.outputFiler!.maxOutput);
+
     _state = state.copyWith(chargerModels: chargers);
   }
 
@@ -78,11 +90,14 @@ class HomeViewModel extends ChangeNotifier {
               isSelected: true),
         )
         .toList();
+    const ChargerOutputFilter defaultOutputFilter =
+        ChargerOutputFilter(minOutput: 0, maxOutput: 350);
 
     _state = state.copyWith(
       userModel: user,
       statusFilters: defaultStatusFilters,
       typeFilters: defaultTypeFilters,
+      outputFiler: defaultOutputFilter,
     );
 
     await _fetchChargerModels();
@@ -142,6 +157,17 @@ class HomeViewModel extends ChangeNotifier {
         .toList();
 
     _state = state.copyWith(typeFilters: updatedTypeFilters);
+    await _fetchChargerModels();
+
+    notifyListeners();
+  }
+
+  Future<void> handleOutputFilter(int minOutput, int maxOutput) async {
+    final updatedOutputFilter = ChargerOutputFilter(
+      minOutput: minOutput,
+      maxOutput: maxOutput,
+    );
+    _state = state.copyWith(outputFiler: updatedOutputFilter);
     await _fetchChargerModels();
 
     notifyListeners();

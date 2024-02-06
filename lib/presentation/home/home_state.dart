@@ -1,5 +1,6 @@
 import 'package:ev_charger_app/domain/model/charger_model.dart';
 import 'package:ev_charger_app/domain/model/user_model.dart';
+import 'package:ev_charger_app/presentation/home/component/charger_output_filter.dart';
 import 'package:ev_charger_app/presentation/home/component/charger_status_filter.dart';
 import 'package:ev_charger_app/presentation/home/component/charger_type_filter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -16,6 +17,7 @@ class HomeState with _$HomeState {
     @Default([]) List<ChargerModel> chargerModels,
     @Default([]) List<ChargerStatusFilter> statusFilters,
     @Default([]) List<ChargerTypeFilter> typeFilters,
+    ChargerOutputFilter? outputFiler,
     @Default(false) bool isToggledStatusFilter,
     @Default(false) bool isToggledTypeFilter,
     @Default(false) bool isToggledOutputFilter,
