@@ -40,6 +40,47 @@ class HomeViewModel extends ChangeNotifier {
     init();
   }
 
+  Future<void> init() async {
+    final user = await _getUserModelUseCase.execute();
+    final defaultStatusFilters = _getDefaultStatusFilters();
+    final defaultTypeFilters = _getDefaultTypeFilters();
+    const defaultOutputFilter =
+        ChargerOutputFilter(minOutput: 0, maxOutput: 350);
+
+    _state = state.copyWith(
+      userModel: user,
+      statusFilters: defaultStatusFilters,
+      typeFilters: defaultTypeFilters,
+      outputFiler: defaultOutputFilter,
+    );
+
+    await _fetchChargerModels();
+
+    notifyListeners();
+  }
+
+  List<ChargerStatusFilter> _getDefaultStatusFilters() {
+    return chargerStatusMap.keys
+        .map(
+          (e) => ChargerStatusFilter(
+              label: chargerStatusMap[e]!['label'] as String,
+              index: chargerStatusMap[e]!['index'] as int,
+              isSelected: true),
+        )
+        .toList();
+  }
+
+  List<ChargerTypeFilter> _getDefaultTypeFilters() {
+    return chargerTypeMap.keys
+        .map(
+          (e) => ChargerTypeFilter(
+              label: chargerTypeMap[e]!['label'] as String,
+              index: chargerTypeMap[e]!['index'] as int,
+              isSelected: true),
+        )
+        .toList();
+  }
+
   Future<void> _fetchChargerModels() async {
     if (state.userModel == null) {
       return;
@@ -70,39 +111,6 @@ class HomeViewModel extends ChangeNotifier {
         chargers, state.outputFiler!.minOutput, state.outputFiler!.maxOutput);
 
     _state = state.copyWith(chargerModels: chargers);
-  }
-
-  Future<void> init() async {
-    final user = await _getUserModelUseCase.execute();
-    final List<ChargerStatusFilter> defaultStatusFilters = chargerStatusMap.keys
-        .map(
-          (e) => ChargerStatusFilter(
-              label: chargerStatusMap[e]!['label'] as String,
-              index: chargerStatusMap[e]!['index'] as int,
-              isSelected: true),
-        )
-        .toList();
-    final List<ChargerTypeFilter> defaultTypeFilters = chargerTypeMap.keys
-        .map(
-          (e) => ChargerTypeFilter(
-              label: chargerTypeMap[e]!['label'] as String,
-              index: chargerTypeMap[e]!['index'] as int,
-              isSelected: true),
-        )
-        .toList();
-    const ChargerOutputFilter defaultOutputFilter =
-        ChargerOutputFilter(minOutput: 0, maxOutput: 350);
-
-    _state = state.copyWith(
-      userModel: user,
-      statusFilters: defaultStatusFilters,
-      typeFilters: defaultTypeFilters,
-      outputFiler: defaultOutputFilter,
-    );
-
-    await _fetchChargerModels();
-
-    notifyListeners();
   }
 
   Future<void> logout() async {
