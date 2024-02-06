@@ -1,6 +1,7 @@
 import 'package:ev_charger_app/presentation/home/component/charger_card.dart';
 import 'package:ev_charger_app/presentation/home/component/drawer_section.dart';
 import 'package:ev_charger_app/presentation/home/component/filter_section.dart';
+import 'package:ev_charger_app/presentation/home/component/output_filter_section.dart';
 import 'package:ev_charger_app/presentation/home/component/status_filter_section.dart';
 import 'package:ev_charger_app/presentation/home/component/type_filter_section.dart';
 import 'package:ev_charger_app/presentation/home/home_view_model.dart';
@@ -52,6 +53,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   const StatusFilterSection(),
                 if (viewModel.state.isToggledTypeFilter)
                   const TypeFilterSection(),
+                if (viewModel.state.isToggledOutputFilter)
+                  const OutputFilterSection(),
               ],
             ),
           ),
