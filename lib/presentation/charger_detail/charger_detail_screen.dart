@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ev_charger_app/presentation/util/in_app_web_view_group_options.dart';
 
 class ChargerDetailScreen extends StatefulWidget {
   final String _chargerId;
@@ -23,17 +24,6 @@ class ChargerDetailScreen extends StatefulWidget {
 
 class _ChargerDetailScreenState extends State<ChargerDetailScreen> {
   InAppWebViewController? webViewController;
-
-  InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
-    crossPlatform: InAppWebViewOptions(
-      useShouldOverrideUrlLoading: true,
-      javaScriptEnabled: true,
-      javaScriptCanOpenWindowsAutomatically: true,
-    ),
-    android: AndroidInAppWebViewOptions(
-      useHybridComposition: true,
-    ),
-  );
 
   @override
   Widget build(BuildContext context) {
