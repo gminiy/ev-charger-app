@@ -5,6 +5,7 @@ import 'package:ev_charger_app/presentation/home/home_screen.dart';
 import 'package:ev_charger_app/presentation/home/home_view_model.dart';
 import 'package:ev_charger_app/presentation/login/login_screen.dart';
 import 'package:ev_charger_app/presentation/login/login_view_model.dart';
+import 'package:ev_charger_app/presentation/profile/profile_screen.dart';
 import 'package:ev_charger_app/presentation/register_address/register_address_screen.dart';
 import 'package:ev_charger_app/presentation/register_address/register_address_view_model.dart';
 import 'package:go_router/go_router.dart';
@@ -43,6 +44,10 @@ final router = GoRouter(
 
         return ChargerDetailScreen(chargerId: chargerId!, location: location!, userId: userId!);
       },
+    ),
+    GoRoute(
+      path: '/profile',
+      builder: (context, state) => ProfileScreen()
     ),
   ],
   refreshListenable: getIt<AuthStatus>(),

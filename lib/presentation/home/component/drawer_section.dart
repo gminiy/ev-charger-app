@@ -30,7 +30,10 @@ class _DrawerSectionState extends State<DrawerSection> {
                         fontSize: 16.0, fontWeight: FontWeight.bold),
                   ),
                 ),
-                ListTile(title: const Text('내 정보'), onTap: () {}),
+                ListTile(
+                  title: const Text('내 정보'),
+                  onTap: () => context.push('/profile'),
+                ),
                 ListTile(title: const Text('고객센터'), onTap: () {}),
                 ListTile(title: const Text('이용 약관 및 정책'), onTap: () {}),
                 ListTile(title: const Text('버전 정보'), onTap: () {}),
