@@ -17,6 +17,7 @@ class ChargerRepositoryImpl implements ChargerRepository {
         .map(
           (e) => ChargerModel(
             id: e['id'],
+            addressId: e['addressId'],
             chargeType: e['chargeType'],
             location: e['location'],
             status: e['status'],

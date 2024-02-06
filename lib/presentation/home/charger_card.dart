@@ -1,5 +1,7 @@
 import 'package:ev_charger_app/domain/model/charger_model.dart';
+import 'package:ev_charger_app/domain/model/user_model.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 final List<String> chargerTypes = [
@@ -17,69 +19,81 @@ final List<String> status = ['통신이상', '충전가능', '충전중', '운�
 
 class ChargerCard extends StatelessWidget {
   final ChargerModel charger;
+  final UserModel user;
 
-  const ChargerCard({super.key, required this.charger});
+  const ChargerCard({
+    super.key,
+    required this.charger,
+    required this.user,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 2.0,
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              charger.location,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  chargerTypes[charger.chargeType],
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.blueGrey,
-                  ),
-                ),
-                Text(
-                  _getStatusText(charger.status),
-                  style: TextStyle(
-                    fontSize: 16,
-                    color:
-                        charger.status == 1 ? Colors.green : Colors.redAccent,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Text(
-              '출력: ${charger.output} kW',
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.black54,
-              ),
-            ),
-            const SizedBox(height: 8),
-            if (charger.lastStartChargingTimestamp != null)
+    return GestureDetector(
+      onTap: () {
+        context.push(
+          '/charger-detail?userId=${user.id}&chargerId=${charger.id}&location=${charger.location}',
+        );
+      },
+      child: Card(
+        elevation: 2.0,
+        margin: const EdgeInsets.symmetric(vertical: 8.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               Text(
-                _getChargeTimeInfoText(charger.lastStartChargingTimestamp!,
-                    charger.lastEndChargingTimestamp),
+                charger.location,
                 style: const TextStyle(
-                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    chargerTypes[charger.chargeType],
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.blueGrey,
+                    ),
+                  ),
+                  Text(
+                    _getStatusText(charger.status),
+                    style: TextStyle(
+                      fontSize: 16,
+                      color:
+                          charger.status == 1 ? Colors.green : Colors.redAccent,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Text(
+                '출력: ${charger.output} kW',
+                style: const TextStyle(
+                  fontSize: 16,
                   color: Colors.black54,
                 ),
               ),
-          ],
+              const SizedBox(height: 8),
+              if (charger.lastStartChargingTimestamp != null)
+                Text(
+                  _getChargeTimeInfoText(charger.lastStartChargingTimestamp!,
+                      charger.lastEndChargingTimestamp),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.black54,
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );

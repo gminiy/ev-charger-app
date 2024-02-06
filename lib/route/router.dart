@@ -1,5 +1,6 @@
 import 'package:ev_charger_app/di/di_setup.dart';
 import 'package:ev_charger_app/presentation/auth_status.dart';
+import 'package:ev_charger_app/presentation/charger_detail/charger_detail_screen.dart';
 import 'package:ev_charger_app/presentation/home/home_screen.dart';
 import 'package:ev_charger_app/presentation/home/home_view_model.dart';
 import 'package:ev_charger_app/presentation/login/login_screen.dart';
@@ -32,6 +33,16 @@ final router = GoRouter(
         create: (context) => getIt<LoginViewModel>(),
         child: const LoginScreen(),
       ),
+    ),
+    GoRoute(
+      path: '/charger-detail',
+      builder: (context, state) {
+        final userId = state.uri.queryParameters['userId'];
+        final chargerId = state.uri.queryParameters['chargerId'];
+        final location = state.uri.queryParameters['location'];
+
+        return ChargerDetailScreen(chargerId: chargerId!, location: location!, userId: userId!);
+      },
     ),
   ],
   refreshListenable: getIt<AuthStatus>(),
