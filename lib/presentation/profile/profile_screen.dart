@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -49,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         const SizedBox(height: 32),
         buildProfileRow('별명', '별명을 입력해주세요.', true),
         buildProfileRow('주소', '강원도 춘천시 퇴계동 퇴계주공7단지', false),
-        buildAddressChangeButton(),
+        buildAddressChangeButton(context),
       ],
     );
   }
@@ -117,16 +118,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget buildAddressChangeButton() {
+  Widget buildAddressChangeButton(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
-      children: [addressChangeButton()],
+      children: [addressChangeButton(context)],
     );
   }
 
-  Widget addressChangeButton() {
+  Widget addressChangeButton(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () => context.push('/register-address'),
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.grey, // 버튼 색상
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
