@@ -11,12 +11,12 @@ class OutputFilterSection extends StatefulWidget {
 
 class _OutputFilterSectionState extends State<OutputFilterSection> {
   double _mapOutputToRangeValue(int value) {
-    final outputValues = {7: 0.0, 50: 1.0, 100: 2.0, 200: 3.0, 350: 4.0};
+    final outputValues = {0: 0.0, 50: 1.0, 100: 2.0, 200: 3.0, 350: 4.0};
     return outputValues[value] ?? 0.0;
   }
 
   int _mapRangeValueToOutput(double value) {
-    final rangeValues = {0.0: 7, 1.0: 50, 2.0: 100, 3.0: 200, 4.0: 350};
+    final rangeValues = {0.0: 0, 1.0: 50, 2.0: 100, 3.0: 200, 4.0: 350};
     return rangeValues[value.roundToDouble()] ?? 7;
   }
 
