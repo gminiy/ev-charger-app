@@ -9,6 +9,7 @@ import 'package:ev_charger_app/domain/repository/address_repository.dart';
 import 'package:ev_charger_app/domain/repository/auth_repository.dart';
 import 'package:ev_charger_app/domain/repository/charger_repository.dart';
 import 'package:ev_charger_app/domain/repository/kakao_auth_repository.dart';
+import 'package:ev_charger_app/domain/use_case/filter_charger_status_use_case.dart';
 import 'package:ev_charger_app/domain/use_case/find_addresses_use_case.dart';
 import 'package:ev_charger_app/domain/use_case/get_chargers_use_case.dart';
 import 'package:ev_charger_app/domain/use_case/get_user_model_use_case.dart';
@@ -50,6 +51,8 @@ void diSetup() async {
       UpdateUserUseCase(authRepository: getIt(), getUserModelUseCase: getIt()));
   getIt.registerSingleton<GetChargersUseCase>(
       GetChargersUseCase(repository: getIt()));
+  getIt.registerSingleton<FilterChargerStatusUseCase>(
+      FilterChargerStatusUseCase());
 
   getIt.registerSingleton<AuthStatus>(AuthStatus());
 
@@ -69,6 +72,7 @@ void diSetup() async {
       logoutUseCase: getIt(),
       getChargersUseCase: getIt(),
       getUserModelUseCase: getIt(),
+      filterChargerStatusUseCase: getIt(),
     ),
   );
 }
