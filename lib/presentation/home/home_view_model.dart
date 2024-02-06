@@ -1,11 +1,14 @@
 import 'package:ev_charger_app/domain/model/charger_model.dart';
 import 'package:ev_charger_app/domain/use_case/filter_charger_status_use_case.dart';
+import 'package:ev_charger_app/domain/use_case/filter_charger_type_use_case.dart';
 import 'package:ev_charger_app/domain/use_case/get_chargers_use_case.dart';
 import 'package:ev_charger_app/domain/use_case/get_user_model_use_case.dart';
 import 'package:ev_charger_app/domain/use_case/logout_use_case.dart';
 import 'package:ev_charger_app/presentation/home/component/charger_status_filter.dart';
+import 'package:ev_charger_app/presentation/home/component/charger_type_filter.dart';
 import 'package:ev_charger_app/presentation/home/home_state.dart';
 import 'package:ev_charger_app/domain/util/charger_status_map.dart';
+import 'package:ev_charger_app/domain/util/charger_type_map.dart';
 import 'package:flutter/material.dart';
 
 class HomeViewModel extends ChangeNotifier {
@@ -14,6 +17,7 @@ class HomeViewModel extends ChangeNotifier {
   final GetChargersUseCase _getChargersUseCase;
   final LogoutUseCase _logoutUseCase;
   final FilterChargerStatusUseCase _filterChargerStatusUseCase;
+  final FilterChargerTypeUseCase _filterChargerTypeUseCase;
 
   HomeState get state => _state;
 
@@ -22,10 +26,12 @@ class HomeViewModel extends ChangeNotifier {
     required GetChargersUseCase getChargersUseCase,
     required LogoutUseCase logoutUseCase,
     required FilterChargerStatusUseCase filterChargerStatusUseCase,
+    required FilterChargerTypeUseCase filterChargerTypeUseCase,
   })  : _getUserModelUseCase = getUserModelUseCase,
         _getChargersUseCase = getChargersUseCase,
         _logoutUseCase = logoutUseCase,
-        _filterChargerStatusUseCase = filterChargerStatusUseCase {
+        _filterChargerStatusUseCase = filterChargerStatusUseCase,
+        _filterChargerTypeUseCase = filterChargerTypeUseCase {
     init();
   }
 
@@ -45,6 +51,12 @@ class HomeViewModel extends ChangeNotifier {
     chargers =
         _filterChargerStatusUseCase.execute(chargers, statusFilterIndexes);
 
+    final List<int> typeFilterIndexes = state.typeFilters
+        .where((e) => e.isSelected)
+        .map((e) => e.index)
+        .toList();
+    chargers = _filterChargerTypeUseCase.execute(chargers, typeFilterIndexes);
+
     _state = state.copyWith(chargerModels: chargers);
   }
 
@@ -58,9 +70,21 @@ class HomeViewModel extends ChangeNotifier {
               isSelected: true),
         )
         .toList();
+    final List<ChargerTypeFilter> defaultTypeFilters = chargerTypeMap.keys
+        .map(
+          (e) => ChargerTypeFilter(
+              label: chargerStatusMap[e]!['label'] as String,
+              index: chargerStatusMap[e]!['index'] as int,
+              isSelected: true),
+        )
+        .toList();
 
-    _state =
-        state.copyWith(userModel: user, statusFilters: defaultStatusFilters);
+    _state = state.copyWith(
+      userModel: user,
+      statusFilters: defaultStatusFilters,
+      typeFilters: defaultTypeFilters,
+    );
+
     await _fetchChargerModels();
 
     notifyListeners();
@@ -105,6 +129,19 @@ class HomeViewModel extends ChangeNotifier {
         .toList();
 
     _state = state.copyWith(statusFilters: updatedStatusFilters);
+    await _fetchChargerModels();
+
+    notifyListeners();
+  }
+
+  Future<void> handleTypeFilter(ChargerTypeFilter typeFilter) async {
+    final updatedTypeFilters = state.typeFilters
+        .map((e) => e.index == typeFilter.index
+            ? typeFilter.copyWith(isSelected: !e.isSelected)
+            : e)
+        .toList();
+
+    _state = state.copyWith(typeFilters: updatedTypeFilters);
     await _fetchChargerModels();
 
     notifyListeners();
