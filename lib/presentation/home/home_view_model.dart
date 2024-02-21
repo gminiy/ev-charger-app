@@ -52,7 +52,7 @@ class HomeViewModel extends ChangeNotifier {
       userModel: user,
       statusFilters: defaultStatusFilters,
       typeFilters: defaultTypeFilters,
-      outputFiler: defaultOutputFilter,
+      outputFilter: defaultOutputFilter,
     );
 
     await _fetchChargerModels();
@@ -116,12 +116,12 @@ class HomeViewModel extends ChangeNotifier {
         .toList();
     chargers = _filterChargerTypeUseCase.execute(chargers, typeFilterIndexes);
 
-    if (state.outputFiler == null) {
+    if (state.outputFilter == null) {
       _state = state.copyWith(chargerModels: chargers);
       return;
     }
     chargers = _filterChargerOutputUseCase.execute(
-        chargers, state.outputFiler!.minOutput, state.outputFiler!.maxOutput);
+        chargers, state.outputFilter!.minOutput, state.outputFilter!.maxOutput);
 
     _state = state.copyWith(chargerModels: chargers);
   }
@@ -188,7 +188,7 @@ class HomeViewModel extends ChangeNotifier {
       minOutput: minOutput,
       maxOutput: maxOutput,
     );
-    _state = state.copyWith(outputFiler: updatedOutputFilter);
+    _state = state.copyWith(outputFilter: updatedOutputFilter);
     await _fetchChargerModels();
 
     notifyListeners();

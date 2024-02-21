@@ -17,7 +17,7 @@ class HomeState with _$HomeState {
     @Default([]) List<ChargerModel> chargerModels,
     @Default([]) List<ChargerStatusFilter> statusFilters,
     @Default([]) List<ChargerTypeFilter> typeFilters,
-    ChargerOutputFilter? outputFiler,
+    ChargerOutputFilter? outputFilter,
     @Default(false) bool isToggledStatusFilter,
     @Default(false) bool isToggledTypeFilter,
     @Default(false) bool isToggledOutputFilter,

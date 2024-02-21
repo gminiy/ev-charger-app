@@ -31,8 +31,8 @@ class _OutputFilterSectionState extends State<OutputFilterSection> {
   @override
   Widget build(BuildContext context) {
     final currentRangeValues = RangeValues(
-      _mapOutputToRangeValue(widget._state.outputFiler!.minOutput),
-      _mapOutputToRangeValue(widget._state.outputFiler!.maxOutput),
+      _mapOutputToRangeValue(widget._state.outputFilter!.minOutput),
+      _mapOutputToRangeValue(widget._state.outputFilter!.maxOutput),
     );
 
     return Container(
