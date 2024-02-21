@@ -59,6 +59,10 @@ class RegisterAddressViewModel extends ChangeNotifier {
     final UserModel user = await _getUserModelUseCase.execute();
     final UserModel newUser = user.copyWith(addressId: address.id);
     await _updateUserUseCase.execute(newUser);
-    _authStatus.setAddressId(newUser.addressId);
+
+    if (!_authStatus.isRegisteredAddress) {
+      _authStatus.setIsRegisteredAddress(true);
+      notifyListeners();
+    }
   }
 }

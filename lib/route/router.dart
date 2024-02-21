@@ -24,10 +24,12 @@ final router = GoRouter(
     ),
     GoRoute(
       path: '/register-address',
-      builder: (context, state) => ChangeNotifierProvider(
-        create: (context) => getIt<RegisterAddressViewModel>(),
-        child: const RegisterAddressScreen(),
-      ),
+      builder: (context, state) {
+        return ChangeNotifierProvider(
+          create: (context) => getIt<RegisterAddressViewModel>(),
+          child: RegisterAddressScreen(),
+        );
+      },
     ),
     GoRoute(
       path: '/login',
@@ -65,7 +67,7 @@ final router = GoRouter(
       return '/login';
     }
 
-    if (getIt<AuthStatus>().addressId == null) {
+    if (!getIt<AuthStatus>().isRegisteredAddress) {
       return '/register-address';
     }
 

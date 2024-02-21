@@ -17,7 +17,11 @@ void main() async {
 
   if (isLogin) {
     final UserModel userModel = await getIt<GetUserModelUseCase>().execute();
-    getIt<AuthStatus>().setAddressId(userModel.addressId);
+
+    if (userModel.addressId != null) {
+      getIt<AuthStatus>().setIsRegisteredAddress(true);
+    }
+
     getIt<AuthStatus>().setIsLogin(true);
   }
 

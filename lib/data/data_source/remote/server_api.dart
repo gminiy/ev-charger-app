@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:ev_charger_app/domain/model/user_model.dart';
 
 class ServerApi {
-  final String _baseUrl = Platform.isAndroid ? 'http://10.0.2.2:8080' : 'http://localhost:8080';
+  final String _baseUrl = Platform.isAndroid ? 'http://10.0.2.2:8080' : 'http://192.168.50.116:8080';
   final Dio _dio;
 
   ServerApi({

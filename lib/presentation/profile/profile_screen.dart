@@ -1,5 +1,6 @@
 import 'package:ev_charger_app/presentation/profile/profile_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -38,11 +39,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               await viewModel
                   .updateProfile(nicknameEditingController.value.text);
 
-              // if (!mounted) {
-              //   return;
-              // }
-              //
-              // context.pop();
+              if (!mounted) {
+                return;
+              }
+
+              context.pop();
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.green[200],
@@ -147,7 +148,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context
+                              .push('/register-address')
+                              .then((value) => viewModel.handlePop());
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.grey, // 버튼 색상
                           padding: const EdgeInsets.symmetric(

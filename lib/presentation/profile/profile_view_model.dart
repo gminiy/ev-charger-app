@@ -43,4 +43,9 @@ class ProfileViewModel extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  Future<void> handlePop() async {
+    await init();
+    notifyListeners();
+  }
 }
