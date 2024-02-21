@@ -53,7 +53,7 @@ class _ChargerDetailScreenState extends State<ChargerDetailScreen> {
           },
           child: InAppWebView(
             initialUrlRequest: URLRequest(
-              url: Uri.parse('http://10.0.2.2:3000'),
+              url: Uri.parse('http://192.168.50.116:3000'),
             ),
             initialOptions: options,
             onWebViewCreated: (controller) {

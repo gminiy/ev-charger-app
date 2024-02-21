@@ -22,6 +22,7 @@ import 'package:ev_charger_app/domain/use_case/update_user_use_case.dart';
 import 'package:ev_charger_app/presentation/auth_status.dart';
 import 'package:ev_charger_app/presentation/home/home_view_model.dart';
 import 'package:ev_charger_app/presentation/login/login_view_model.dart';
+import 'package:ev_charger_app/presentation/profile/profile_view_model.dart';
 import 'package:ev_charger_app/presentation/register_address/register_address_view_model.dart';
 import 'package:get_it/get_it.dart';
 
@@ -80,6 +81,12 @@ void diSetup() async {
       filterChargerStatusUseCase: getIt(),
       filterChargerTypeUseCase: getIt(),
       filterChargerOutputUseCase: getIt(),
+    ),
+  );
+  getIt.registerFactory<ProfileViewModel>(
+    () => ProfileViewModel(
+      getUserModelUseCase: getIt(),
+      updateUserUseCase: getIt(),
     ),
   );
 }

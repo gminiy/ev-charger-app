@@ -88,8 +88,8 @@ class _RegisterAddressScreenState extends State<RegisterAddressScreen> {
                         itemCount: viewModel.state.addresses.length,
                         itemBuilder: (BuildContext context, int index) {
                           return ListTile(
-                              title:
-                                  Text(viewModel.state.addresses[index].address),
+                              title: Text(
+                                  viewModel.state.addresses[index].address),
                               onTap: () {
                                 viewModel.selectAddress(
                                     viewModel.state.addresses[index]);
@@ -108,11 +108,16 @@ class _RegisterAddressScreenState extends State<RegisterAddressScreen> {
                     onPressed: viewModel.state.selected == null
                         ? null
                         : () async {
-                            await viewModel.registerAddress(viewModel.state.selected!);
+                            await viewModel
+                                .registerAddress(viewModel.state.selected!);
 
                             if (!mounted) return;
 
-                            context.go('/');
+                            if (!context.canPop()) {
+                              context.go('/');
+                            } else {
+                              context.pop();
+                            }
                           },
                     child: const Text(
                       '입력 완료',

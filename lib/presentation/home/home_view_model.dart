@@ -193,4 +193,9 @@ class HomeViewModel extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  Future<void> handlePop() async {
+    await init();
+    notifyListeners();
+  }
 }
