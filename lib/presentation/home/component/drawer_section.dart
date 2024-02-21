@@ -1,10 +1,18 @@
-import 'package:ev_charger_app/presentation/home/home_view_model.dart';
+import 'package:ev_charger_app/presentation/home/home_event.dart';
+import 'package:ev_charger_app/presentation/home/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
 class DrawerSection extends StatefulWidget {
-  const DrawerSection({super.key});
+  final HomeState _state;
+  final void Function(HomeEvent event) _callback;
+
+  const DrawerSection(
+      {super.key,
+      required HomeState state,
+      required void Function(HomeEvent event) callback})
+      : _state = state,
+        _callback = callback;
 
   @override
   State<DrawerSection> createState() => _DrawerSectionState();
@@ -13,7 +21,6 @@ class DrawerSection extends StatefulWidget {
 class _DrawerSectionState extends State<DrawerSection> {
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.watch<HomeViewModel>();
     return Drawer(
       child: Column(
         children: [
@@ -23,9 +30,9 @@ class _DrawerSectionState extends State<DrawerSection> {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
-                    viewModel.state.userModel == null
+                    widget._state.userModel == null
                         ? ''
-                        : viewModel.state.userModel!.nickname,
+                        : widget._state.userModel!.nickname,
                     style: const TextStyle(
                         fontSize: 16.0, fontWeight: FontWeight.bold),
                   ),
@@ -50,7 +57,7 @@ class _DrawerSectionState extends State<DrawerSection> {
               ),
             ),
             onTap: () async {
-              await viewModel.logout();
+              widget._callback.call(const HomeEvent.logout());
 
               if (!mounted) return;
 

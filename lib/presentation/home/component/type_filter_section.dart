@@ -1,10 +1,18 @@
 import 'package:ev_charger_app/presentation/home/component/charger_type_filter.dart';
-import 'package:ev_charger_app/presentation/home/home_view_model.dart';
+import 'package:ev_charger_app/presentation/home/home_event.dart';
+import 'package:ev_charger_app/presentation/home/home_state.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class TypeFilterSection extends StatelessWidget {
-  const TypeFilterSection({super.key});
+  final HomeState _state;
+  final void Function(HomeEvent event) _callback;
+
+  const TypeFilterSection({
+    super.key,
+    required HomeState state,
+    required void Function(HomeEvent event) callback,
+  })  : _state = state,
+        _callback = callback;
 
   Widget _buildStatusCard(ChargerTypeFilter typeFilter, VoidCallback onTap) {
     return GestureDetector(
@@ -32,7 +40,6 @@ class TypeFilterSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.watch<HomeViewModel>();
     return Container(
       height: 128,
       color: Colors.white,
@@ -56,13 +63,16 @@ class TypeFilterSection extends StatelessWidget {
                   crossAxisSpacing: 16.0,
                   mainAxisSpacing: 3.0,
                 ),
-                itemCount: viewModel.state.typeFilters.length,
+                itemCount: _state.typeFilters.length,
                 itemBuilder: (context, index) {
                   return _buildStatusCard(
-                    viewModel.state.typeFilters[index],
+                    _state.typeFilters[index],
                     () {
-                      viewModel
-                          .handleTypeFilter(viewModel.state.typeFilters[index]);
+                      _callback.call(
+                        HomeEvent.handleTypeFilter(
+                          _state.typeFilters[index],
+                        ),
+                      );
                     },
                   );
                 },

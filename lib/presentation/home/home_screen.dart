@@ -21,7 +21,10 @@ class _HomeScreenState extends State<HomeScreen> {
     final viewModel = context.watch<HomeViewModel>();
 
     return Scaffold(
-      drawer: const DrawerSection(),
+      drawer: DrawerSection(
+        state: viewModel.state,
+        callback: viewModel.onEvent,
+      ),
       appBar: AppBar(
           title: viewModel.state.userModel == null
               ? const Text('')
@@ -36,7 +39,10 @@ class _HomeScreenState extends State<HomeScreen> {
           scrolledUnderElevation: 0),
       body: Column(
         children: [
-          const FilterSection(),
+          FilterSection(
+            state: viewModel.state,
+            callback: viewModel.onEvent,
+          ),
           Expanded(
             child: Stack(
               children: [
@@ -50,11 +56,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
                 if (viewModel.state.isToggledStatusFilter)
-                  const StatusFilterSection(),
+                  StatusFilterSection(
+                    state: viewModel.state,
+                    callback: viewModel.onEvent,
+                  ),
                 if (viewModel.state.isToggledTypeFilter)
-                  const TypeFilterSection(),
+                  TypeFilterSection(
+                    state: viewModel.state,
+                    callback: viewModel.onEvent,
+                  ),
                 if (viewModel.state.isToggledOutputFilter)
-                  const OutputFilterSection(),
+                  OutputFilterSection(
+                    state: viewModel.state,
+                    callback: viewModel.onEvent,
+                  ),
               ],
             ),
           ),

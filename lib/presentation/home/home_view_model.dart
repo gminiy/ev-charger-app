@@ -8,6 +8,7 @@ import 'package:ev_charger_app/domain/use_case/logout_use_case.dart';
 import 'package:ev_charger_app/presentation/home/component/charger_output_filter.dart';
 import 'package:ev_charger_app/presentation/home/component/charger_status_filter.dart';
 import 'package:ev_charger_app/presentation/home/component/charger_type_filter.dart';
+import 'package:ev_charger_app/presentation/home/home_event.dart';
 import 'package:ev_charger_app/presentation/home/home_state.dart';
 import 'package:ev_charger_app/domain/util/charger_status_map.dart';
 import 'package:ev_charger_app/domain/util/charger_type_map.dart';
@@ -57,6 +58,18 @@ class HomeViewModel extends ChangeNotifier {
     await _fetchChargerModels();
 
     notifyListeners();
+  }
+
+  void onEvent(HomeEvent event) {
+    event.when(
+      toggleStatusFilter: toggleStatusFilter,
+      toggleTypeFilter: toggleTypeFilter,
+      toggleOutputFilter: toggleOutputFilter,
+      handleOutputFilter: handleOutputFilter,
+      handleStatusFilter: handleStatusFilter,
+      handleTypeFilter: handleTypeFilter,
+      logout: logout,
+    );
   }
 
   List<ChargerStatusFilter> _getDefaultStatusFilters() {

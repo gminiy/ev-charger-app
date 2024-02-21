@@ -1,9 +1,17 @@
-import 'package:ev_charger_app/presentation/home/home_view_model.dart';
+import 'package:ev_charger_app/presentation/home/home_event.dart';
+import 'package:ev_charger_app/presentation/home/home_state.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class OutputFilterSection extends StatefulWidget {
-  const OutputFilterSection({super.key});
+  final HomeState _state;
+  final void Function(HomeEvent event) _callback;
+
+  const OutputFilterSection(
+      {super.key,
+      required HomeState state,
+      required void Function(HomeEvent event) callback})
+      : _state = state,
+        _callback = callback;
 
   @override
   State<OutputFilterSection> createState() => _OutputFilterSectionState();
@@ -22,10 +30,9 @@ class _OutputFilterSectionState extends State<OutputFilterSection> {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.watch<HomeViewModel>();
     final currentRangeValues = RangeValues(
-      _mapOutputToRangeValue(viewModel.state.outputFiler!.minOutput),
-      _mapOutputToRangeValue(viewModel.state.outputFiler!.maxOutput),
+      _mapOutputToRangeValue(widget._state.outputFiler!.minOutput),
+      _mapOutputToRangeValue(widget._state.outputFiler!.maxOutput),
     );
 
     return Container(
@@ -34,7 +41,10 @@ class _OutputFilterSectionState extends State<OutputFilterSection> {
       child: Column(
         children: [
           _buildHeader(),
-          _buildRangeSlider(currentRangeValues, viewModel),
+          _buildRangeSlider(
+            currentRangeValues,
+            widget._callback,
+          ),
           _buildLabels(),
         ],
       ),
@@ -56,8 +66,8 @@ class _OutputFilterSectionState extends State<OutputFilterSection> {
     );
   }
 
-  Padding _buildRangeSlider(
-      RangeValues currentRangeValues, HomeViewModel viewModel) {
+  Padding _buildRangeSlider(RangeValues currentRangeValues,
+      void Function(HomeEvent event) onChanged) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32.0),
       child: RangeSlider(
@@ -66,9 +76,11 @@ class _OutputFilterSectionState extends State<OutputFilterSection> {
         max: 4,
         divisions: 4,
         onChanged: (RangeValues values) {
-          viewModel.handleOutputFilter(
-            _mapRangeValueToOutput(values.start),
-            _mapRangeValueToOutput(values.end),
+          onChanged.call(
+            HomeEvent.handleOutputFilter(
+              _mapRangeValueToOutput(values.start),
+              _mapRangeValueToOutput(values.end),
+            ),
           );
         },
       ),

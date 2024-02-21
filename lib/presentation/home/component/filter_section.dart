@@ -1,9 +1,17 @@
-import 'package:ev_charger_app/presentation/home/home_view_model.dart';
+import 'package:ev_charger_app/presentation/home/home_event.dart';
+import 'package:ev_charger_app/presentation/home/home_state.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class FilterSection extends StatefulWidget {
-  const FilterSection({super.key});
+  final HomeState _state;
+  final void Function(HomeEvent event) _callback;
+
+  const FilterSection(
+      {super.key,
+      required HomeState state,
+      required void Function(HomeEvent event) callback})
+      : _state = state,
+        _callback = callback;
 
   @override
   State<FilterSection> createState() => _FilterSectionState();
@@ -34,22 +42,24 @@ class _FilterSectionState extends State<FilterSection> {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.watch<HomeViewModel>();
     final Map<String, Map<String, Object>> filters = {
       'status': {
         'title': '충전 상태',
-        'onTap': () => viewModel.toggleStatusFilter(),
-        'isToggled': viewModel.state.isToggledStatusFilter,
+        'onTap': () =>
+            widget._callback.call(const HomeEvent.toggleStatusFilter()),
+        'isToggled': widget._state.isToggledStatusFilter,
       },
       'type': {
         'title': '충전기 타입',
-        'onTap': () => viewModel.toggleTypeFilter(),
-        'isToggled': viewModel.state.isToggledTypeFilter,
+        'onTap': () =>
+            widget._callback.call(const HomeEvent.toggleTypeFilter()),
+        'isToggled': widget._state.isToggledTypeFilter,
       },
       'output': {
         'title': '충전 속도',
-        'onTap': () => viewModel.toggleOutputFilter(),
-        'isToggled': viewModel.state.isToggledOutputFilter,
+        'onTap': () =>
+            widget._callback.call(const HomeEvent.toggleOutputFilter()),
+        'isToggled': widget._state.isToggledOutputFilter,
       }
     };
 

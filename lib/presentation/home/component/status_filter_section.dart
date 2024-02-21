@@ -1,12 +1,21 @@
 import 'package:ev_charger_app/presentation/home/component/charger_status_filter.dart';
-import 'package:ev_charger_app/presentation/home/home_view_model.dart';
+import 'package:ev_charger_app/presentation/home/home_event.dart';
+import 'package:ev_charger_app/presentation/home/home_state.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class StatusFilterSection extends StatelessWidget {
-  const StatusFilterSection({super.key});
+  final HomeState _state;
+  final void Function(HomeEvent event) _callback;
 
-  Widget _buildStatusCard(ChargerStatusFilter statusFilter, VoidCallback onTap) {
+  const StatusFilterSection({
+    super.key,
+    required HomeState state,
+    required void Function(HomeEvent event) callback,
+  })  : _state = state,
+        _callback = callback;
+
+  Widget _buildStatusCard(
+      ChargerStatusFilter statusFilter, VoidCallback onTap) {
     return GestureDetector(
       onTap: () => onTap(),
       child: Card(
@@ -32,7 +41,6 @@ class StatusFilterSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.watch<HomeViewModel>();
     return Container(
       height: 128,
       color: Colors.white,
@@ -56,13 +64,18 @@ class StatusFilterSection extends StatelessWidget {
                   crossAxisSpacing: 16.0,
                   mainAxisSpacing: 3.0,
                 ),
-                itemCount: viewModel.state.statusFilters.length,
+                itemCount: _state.statusFilters.length,
                 itemBuilder: (context, index) {
-                  return _buildStatusCard(viewModel.state.statusFilters[index],
-                      () {
-                    viewModel.handleStatusFilter(
-                        viewModel.state.statusFilters[index]);
-                  });
+                  return _buildStatusCard(
+                    _state.statusFilters[index],
+                    () {
+                      _callback.call(
+                        HomeEvent.handleStatusFilter(
+                          _state.statusFilters[index],
+                        ),
+                      );
+                    },
+                  );
                 },
               ),
             ),
