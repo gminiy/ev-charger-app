@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 class StatusFilterSection extends StatelessWidget {
   const StatusFilterSection({super.key});
 
-  Widget _buildStatusCard(ChargerStatusFilter statusFilter, Function onTap) {
+  Widget _buildStatusCard(ChargerStatusFilter statusFilter, VoidCallback onTap) {
     return GestureDetector(
       onTap: () => onTap(),
       child: Card(

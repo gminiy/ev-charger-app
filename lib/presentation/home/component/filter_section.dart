@@ -10,7 +10,7 @@ class FilterSection extends StatefulWidget {
 }
 
 class _FilterSectionState extends State<FilterSection> {
-  Widget _buildFilterCard(String title, Function onTap, bool isToggled) {
+  Widget _buildFilterCard(String title, VoidCallback onTap, bool isToggled) {
     return GestureDetector(
       onTap: () => onTap(),
       child: Card(
